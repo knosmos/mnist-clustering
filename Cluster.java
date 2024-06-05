@@ -18,7 +18,7 @@ public class Cluster {
         }
         for (Sample sample: samples) {
             for (int i=0; i<centroid.length; i++) {
-                centroid[i] += sample[i];
+                centroid[i] += sample.getData()[i];
             }
         }
         for (int i=0; i<centroid.length; i++) {
@@ -33,5 +33,16 @@ public class Cluster {
     }
     public int size() {
         return samples.length;
+    }
+    public String toString() {
+        String res = "size | " + size() + "\n";
+        for (int i=0; i<28; i+=2) {
+            for (int j=0; j<28; j++) {
+                if (centroid[j*28 + i] > 0.5) res += "#";
+                else res += ".";
+            }
+            res += "\n";
+        }
+        return res;
     }
 }
