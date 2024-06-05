@@ -9,7 +9,7 @@ public class Train {
 
     public static void main(String[] args) throws IOException {
         // load samples
-        n = 300;
+        n = 550;
         samples = new Sample[n];
         for (int i=0; i<n; i++) {
             Sample s = new Sample("train/img_" + (i+1) + ".jpg");
@@ -18,13 +18,15 @@ public class Train {
 
         // run clustering
         //HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
-        
+        clusters = runClustering();
 
         // Generate visualizations of clusters
         for (Cluster cluster: clusters) {
             cluster.calculateCentroid();
             System.out.println(cluster.toString());
         }
+
+        // Store clusters
     }
     public static ArrayList<Cluster> runClustering() {
         // Kruskal's algorithm
@@ -74,7 +76,46 @@ public class Train {
             clusters.add(new Cluster(cluster_samples));
         }
 
-        // because kruskal sucks too much, we run k-means afterwards
-        
+        /*
+        clusters = new ArrayList<Cluster>();
+        for (int i=0; i<CLASSES; i++) {
+            Cluster c = new Cluster();
+            c.addSample(samples[(int)(Math.random() * n)]);
+            clusters.add(c);
+        }*/
+
+        // Run k-means afterwards
+        for (int it=0; it<100; it++) {
+            ArrayList<double[]> centroids = new ArrayList<double[]>();
+
+            // get centroids
+            for (Cluster cluster: clusters) {
+                cluster.calculateCentroid();
+                centroids.add(cluster.getCentroid());
+            }
+
+            // build new clusters: iterate through each sample
+            // and assign to the nearest centroid
+            ArrayList<Cluster> newClusters = new ArrayList<Cluster>();
+            for (int i=0; i<centroids.size(); i++) {
+                newClusters.add(new Cluster());
+            }
+            for (Sample s: samples) {
+                double best_dist = 1000000000;
+                int best_idx = 0;
+                for (int i=0; i<centroids.size(); i++) {
+                    double dist = s.distance(centroids.get(i));
+                    if (dist < best_dist) {
+                        best_dist = dist;
+                        best_idx = i;
+                    }
+                }
+                newClusters.get(best_idx).addSample(s);
+            }
+
+            // update clusters
+            clusters = newClusters;
+        }
+        return clusters;
     }
 }

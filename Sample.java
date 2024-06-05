@@ -16,13 +16,14 @@ public class Sample {
     }
     public double distance(Sample other) {
         // squared euclidean distance
-        /*double dist = 0;
+        double dist = 0;
         double[] other_data = other.getData();
         for (int i=0; i<data.length; i++) {
             dist += Math.abs(data[i] - other_data[i]);
         }
-        return dist;*/
+        return dist;
         // cosine distance
+        /*
         double[] other_data = other.getData();
         double dot = 0;
         double sz1 = 0;
@@ -33,6 +34,25 @@ public class Sample {
             sz2 += other_data[i] * other_data[i];
         }
         return 1 - dot / (Math.sqrt(sz1) * Math.sqrt(sz2));
+        */
+    }
+    public double distance(double[] other_data) {
+        double dist = 0;
+        for (int i=0; i<data.length; i++) {
+            dist += Math.abs(data[i] - other_data[i]);
+        }
+        return dist;
+        /*
+        double dot = 0;
+        double sz1 = 0;
+        double sz2 = 0;
+        for (int i=0; i<data.length; i++) {
+            dot += other_data[i] * data[i];
+            sz1 += data[i] * data[i];
+            sz2 += other_data[i] * other_data[i];
+        }
+        return 1 - dot / (Math.sqrt(sz1) * Math.sqrt(sz2));
+        */
     }
     public double[] getData() {
         return this.data;
