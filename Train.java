@@ -20,7 +20,7 @@ public class Train {
         //HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
         clusters = runClustering();
 
-        // Generate visualizations of clusters
+        // Generate visualizations of clusters and ask for labeling
         for (Cluster cluster: clusters) {
             cluster.calculateCentroid();
             System.out.println(cluster.toString());
