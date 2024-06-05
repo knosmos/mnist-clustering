@@ -17,17 +17,8 @@ public class Train {
         }
 
         // run clustering
-        HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
-
-        // clean up and generate clusters
-        clusters = new ArrayList<Cluster>();
-        for (ArrayList<Integer> c: clusterResult.values()) {
-            Sample[] cluster_samples = new Sample[c.size()];
-            for (int i=0; i<c.size(); i++) {
-                cluster_samples[i] = samples[c.get(i)];
-            }
-            clusters.add(new Cluster(cluster_samples));
-        }
+        //HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
+        
 
         // Generate visualizations of clusters
         for (Cluster cluster: clusters) {
@@ -35,7 +26,7 @@ public class Train {
             System.out.println(cluster.toString());
         }
     }
-    public static HashMap<Integer, ArrayList<Integer>> runClustering() {
+    public static ArrayList<Cluster> runClustering() {
         // Kruskal's algorithm
         // generate edges
         Double[][] edges = new Double[n * (n-1) / 2][3]; // a, b, weight
@@ -71,6 +62,19 @@ public class Train {
         }
 
         // generate connected components
-        return dsu.readout();
+        HashMap<Integer, ArrayList<Integer>> clusterResult = dsu.readout();
+
+        // clean up and generate clusters
+        clusters = new ArrayList<Cluster>();
+        for (ArrayList<Integer> c: clusterResult.values()) {
+            Sample[] cluster_samples = new Sample[c.size()];
+            for (int i=0; i<c.size(); i++) {
+                cluster_samples[i] = samples[c.get(i)];
+            }
+            clusters.add(new Cluster(cluster_samples));
+        }
+
+        // because kruskal sucks too much, we run k-means afterwards
+        
     }
 }
