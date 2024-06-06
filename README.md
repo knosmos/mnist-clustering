@@ -8,6 +8,17 @@ I provide a pretrained clustering result, but to run the clustering yourself, fi
 javac Train.java
 java Train
 ```
+Upon completion of cluster generation, this will also generate ASCII depictions of the centroids of each cluster (as shown below).
+
+I also provide an interactive visualizer, which can be run with:
+```
+javac Interactive.java
+java Interactive
+```
+This allows the user to draw a digit on the left-hand canvas; the closest cluster centroid will be displayed on the right:
+
+<img width="795" alt="Screenshot 2024-06-06 at 3 53 58 PM" src="https://github.com/knosmos/mnist-clustering/assets/30610197/aa9bad18-ac6a-4372-ad5c-8fcdd63aceba">
+
 
 ## Example Clustering
 
