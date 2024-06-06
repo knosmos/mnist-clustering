@@ -226,7 +226,10 @@ Final Project Name: MNIST Clustering with Kruskal and K-means
  *  Describe the methods used in your ADTs
  *****************************************************************************/
 
- 
+ Important methods:
+ public static ArrayList<Cluster> runClustering(), in Train - generates clusters
+ public double distance(Sample other), in Sample - calculates distance to other samples
+ public void calculateCentroid(), in Cluster - calculates centroid of cluster
 
 /******************************************************************************
  *  Describe the data needed for your project.
@@ -237,7 +240,8 @@ Final Project Name: MNIST Clustering with Kruskal and K-means
 
  The dataset is very large and must be downloaded from Kaggle (see Usage section);
  this contains image files of the handwritten digits used to create the clustering.
- A pretrained clustering result is provided.
+ The data files must be stored in an "archive" folder. A pretrained clustering
+ result is provided in cluster.txt.
 
 /******************************************************************************
  *  Known bugs/limitations.
