@@ -1,9 +1,14 @@
 # MNIST Clustering
 
-Using Kruskal's algorithm and K-means clustering to perform unsupervised clustering on MNIST digits. Built for an Algorithms final project, which is why the setup is somewhat contrived (and why it is written in Java...)
+Uses Kruskal's algorithm and K-means clustering to perform unsupervised clustering on MNIST digits. Built for an Algorithms final project, which is why the setup is somewhat contrived (and why it is written in Java...)
+
+## Introduction
+In creating datasets for machine learning, a major bottleneck is often not the data-gathering itself, but the annotation: finding the “correct answers” for a given piece of data, e.g. labeling a picture of a dog. Unsupervised machine learning aims to learn patterns from data without any annotation at all; one common unsupervised learning approach is clustering, where we try to group similar data into sets. To measure the “goodness” of a clustering, we can define a distance function between each sample in the dataset. Then, we can try to minimize the maximum distance within each cluster. We can do this by starting off with a graph of unconnected samples, then repeatedly merging clusters of samples that have minimum distance until we have the desired number of clusters. As it turns out, this is exactly the same procedure as Kruskal’s minimum spanning tree problem.
+
+This is a demonstration of this technique: a digit clustering model trained on samples from MNIST. However, it turns out that Kruskal actually does not work very well in clustering MNIST (and tends to produce very uneven clusters), so I run K-means clustering afterwards to produce clusters that have more evenly distributed samples.
 
 ## Usage
-I provide a pretrained clustering result, but to run the clustering yourself, first download the dataset from [Kaggle](https://www.kaggle.com/datasets/scolianni/mnistasjpg) (store in `archive` folder) and run:
+I provide a pretrained clustering result, but to run the clustering yourself, first download the dataset from [Kaggle](https://www.kaggle.com/datasets/scolianni/mnistasjpg) (make and store in `archive` folder) and run:
 ```
 javac Train.java
 java Train
@@ -183,3 +188,99 @@ size | 421
 ............................
 ............................
 ```
+
+## Question responses
+```
+/******************************************************************************
+ *  Name: Jieruei Chang
+ *
+ *  Partner Name: N/A
+ *
+ ******************************************************************************/
+
+Final Project Name: MNIST Clustering with Kruskal and K-means
+
+/******************************************************************************
+ *  Describe how decided to implement this project. Is it original? or a spin-off
+ *  a similar project? If it is the latter, submit a link or documentation to it.
+ *****************************************************************************/
+
+(answered above in Introduction section)
+
+/******************************************************************************
+ *  Describe step by step how to execute your project successfully.
+ *  If multiple conditions result in different outputs, describe the steps 
+ *  to achieve the different outcomes.
+ *****************************************************************************/
+
+(answered above in Usage section)
+
+/******************************************************************************
+ * Describe the data types you used to implement your project
+ *  
+ *****************************************************************************/
+
+ Disjoint-set union, ArrayList, HashMap, Array
+
+/******************************************************************************
+ *  Describe the methods used in your ADTs
+ *****************************************************************************/
+
+ 
+
+/******************************************************************************
+ *  Describe the data needed for your project.
+ *  Submit data file(s) to run your project. What is the name of the data file(s)?
+ *  Describe the purpose of the data.
+ *  Describe the multiple testing done to demonstrate a successful implementation.
+ *****************************************************************************/
+
+ The dataset is very large and must be downloaded from Kaggle (see Usage section);
+ this contains image files of the handwritten digits used to create the clustering.
+ A pretrained clustering result is provided.
+
+/******************************************************************************
+ *  Known bugs/limitations.
+ *****************************************************************************/
+
+ Program cannot handle more than ~5000 training samples on my poor Macbook, as
+ it runs out of memory while running the clustering. The clustering itself
+ is not perfect, as it is built off of a comparatively small training set.
+
+/******************************************************************************
+ *  Describe whatever help (if any) that you received.
+ *  Don't include readings, lectures, and precepts, but do
+ *  include any help from people (including course classmates, and friends)
+ *  and attribute them by name.
+ *****************************************************************************/
+
+ None
+
+/******************************************************************************
+ *  Describe any serious problems you encountered.                    
+ *****************************************************************************/
+
+ Kruskal's algorithm alone returned unacceptable clusterings, so I decided
+ to run K-means afterwards to produce a more even clustering. The squared Euclidean
+ distance metric is also not the best one to use in this case, though Manhattan
+ and Cosine distance did not return drastically different results.
+
+/***************************************************************************************
+* Collaboration with a partner.  Both students must work together and discuss, write,
+* debug, test, analyze, document, and submit all elements of the assignment together.
+* Both partners are responsible for understanding all parts of the submitted assignment
+* and receive the same grade. If two students begin working on an assignment as partners
+* and cannot complete it together, (at least) one student must contact me to request a 
+* partnership dissolution.
+ **************************************************************************************/
+
+ N/A
+
+/******************************************************************************
+ *  List any other comments here. Feel free to provide any feedback   
+ *  on  how helpful the class meeting was and on how much you learned 
+ * from doing the assignment, and whether you enjoyed doing it.
+ *****************************************************************************/
+
+ This was quite a fun (if frustrating) project to build.
+ ```
