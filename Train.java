@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Train {
@@ -9,12 +9,29 @@ public class Train {
 
     public static void main(String[] args) throws IOException {
         // load samples
-        n = 550;
-        samples = new Sample[n];
+
+        /* 
         for (int i=0; i<n; i++) {
             Sample s = new Sample("train/img_" + (i+1) + ".jpg");
             samples[i] = s;
         }
+        */
+
+        File folder = new File("archive/trainingSet/trainingSet");
+        n = 5000;
+        ArrayList<String> filenames = listFiles(folder);
+        // n = filenames.size();
+        samples = new Sample[n];
+        for (int i=0; i<n; i++) {
+            // System.out.println(filenames.get(i));
+            Sample s = new Sample(
+                filenames.get(
+                    (int)(Math.random() * filenames.size())
+                )
+            );
+            samples[i] = s;
+        }
+        System.out.println(n + " samples loaded");
 
         // run clustering
         //HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
@@ -27,6 +44,11 @@ public class Train {
         }
 
         // Store clusters
+        FileWriter writer = new FileWriter("clusters.txt");
+        for (Cluster cluster: clusters) {
+            writer.write(cluster.export());
+        }
+        writer.close();
     }
     public static ArrayList<Cluster> runClustering() {
         // Kruskal's algorithm
@@ -43,9 +65,11 @@ public class Train {
         Comparator<Double[]> edgeComparator = Comparator.comparing(c -> c[2]);
         Arrays.sort(edges, edgeComparator);
         
+        /* 
         for (int i=0; i<20; i++) {
             System.out.printf("[%d %d, wt: %2f]\n", edges[i][0].intValue(), edges[i][1].intValue(), edges[i][2]);
         }
+        */
 
         // construct DSU
         DSU dsu = new DSU(n);
@@ -117,5 +141,18 @@ public class Train {
             clusters = newClusters;
         }
         return clusters;
+    }
+
+    public static ArrayList<String> listFiles(File folder) {
+        ArrayList<String> files = new ArrayList<String>();
+        for (File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                for (String f: listFiles(fileEntry)) files.add(f);
+            } else {
+                String path = fileEntry.getPath();
+                if (path.endsWith(".jpg")) files.add(path);
+            }
+        }
+        return files;
     }
 }

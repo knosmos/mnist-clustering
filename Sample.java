@@ -19,7 +19,7 @@ public class Sample {
         double dist = 0;
         double[] other_data = other.getData();
         for (int i=0; i<data.length; i++) {
-            dist += Math.abs(data[i] - other_data[i]);
+            dist += (data[i] - other_data[i]) * (data[i] - other_data[i]);
         }
         return dist;
         // cosine distance
@@ -39,7 +39,7 @@ public class Sample {
     public double distance(double[] other_data) {
         double dist = 0;
         for (int i=0; i<data.length; i++) {
-            dist += Math.abs(data[i] - other_data[i]);
+            dist += (data[i] - other_data[i]) * (data[i] - other_data[i]);
         }
         return dist;
         /*

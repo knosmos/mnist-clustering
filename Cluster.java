@@ -46,6 +46,14 @@ public class Cluster {
     public int size() {
         return samples.length;
     }
+    public String export() {
+        String res = "";
+        for (int i=0; i<centroid.length; i++) {
+            res += String.format("%.2f ", centroid[i]);
+        }
+        res += "\n";
+        return res;
+    }
     public String toString() {
         String res = "size | " + size() + "\n";
         for (int i=0; i<28; i+=2) {
