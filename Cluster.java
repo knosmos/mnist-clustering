@@ -1,5 +1,9 @@
 /*
  * Class to represent one detected cluster
+ *
+ * Jieruei Chang
+ * Java 11
+ * 4/6/2024
  */
 
 import java.util.*;
@@ -7,6 +11,7 @@ import java.util.*;
 public class Cluster {
     private Sample[] samples;
     private double[] centroid;
+
     public Cluster(Sample[] samples) {
         this.samples = samples;
         centroid = new double[28*28];
@@ -15,8 +20,9 @@ public class Cluster {
         centroid = new double[28*28];
         this.samples = new Sample[0];
     }
+
+    /* Calculate center of mass of samples */
     public void calculateCentroid() {
-        // calculate center of mass of samples
         for (int i=0; i<centroid.length; i++) {
             centroid[i] = 0;
         }
@@ -29,6 +35,8 @@ public class Cluster {
             centroid[i] /= samples.length;
         }
     }
+
+    /* Add new sample */
     public void addSample(Sample sample) {
         Sample[] newSamples = new Sample[samples.length + 1];
         for (int i=0; i<samples.length; i++) {
@@ -37,15 +45,8 @@ public class Cluster {
         newSamples[samples.length] = sample;
         samples = newSamples;
     }
-    public double[] getCentroid() {
-        return centroid;
-    }
-    public Sample[] getSamples() {
-        return samples;
-    }
-    public int size() {
-        return samples.length;
-    }
+
+    /* Data for writing to file storage */
     public String export() {
         String res = "";
         for (int i=0; i<centroid.length; i++) {
@@ -54,6 +55,8 @@ public class Cluster {
         res += "\n";
         return res;
     }
+
+    /* Pretty-print ASCII visualization */
     public String toString() {
         String res = "size | " + size() + "\n";
         for (int i=0; i<28; i+=2) {
@@ -72,5 +75,15 @@ public class Cluster {
             res += "\n";
         }
         return res;
+    }
+
+    public double[] getCentroid() {
+        return centroid;
+    }
+    public Sample[] getSamples() {
+        return samples;
+    }
+    public int size() {
+        return samples.length;
     }
 }

@@ -1,5 +1,9 @@
 /*
  * Disjoint-set Union / Union-Find implementation
+ * 
+ * Jieruei Chang
+ * Java 11
+ * 4/6/2024
  */
 
 import java.util.*;

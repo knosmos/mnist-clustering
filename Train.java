@@ -1,3 +1,11 @@
+/*
+ * Kruskal/K-means Clustering
+ * 
+ * Jieruei Chang
+ * Java 11
+ * 4/6/2024
+ */
+
 import java.io.*;
 import java.util.*;
 
@@ -9,21 +17,12 @@ public class Train {
 
     public static void main(String[] args) throws IOException {
         // load samples
-
-        /* 
-        for (int i=0; i<n; i++) {
-            Sample s = new Sample("train/img_" + (i+1) + ".jpg");
-            samples[i] = s;
-        }
-        */
-
         File folder = new File("archive/trainingSet/trainingSet");
         n = 5000;
         ArrayList<String> filenames = listFiles(folder);
         // n = filenames.size();
         samples = new Sample[n];
         for (int i=0; i<n; i++) {
-            // System.out.println(filenames.get(i));
             Sample s = new Sample(
                 filenames.get(
                     (int)(Math.random() * filenames.size())
@@ -34,7 +33,6 @@ public class Train {
         System.out.println(n + " samples loaded");
 
         // run clustering
-        //HashMap<Integer, ArrayList<Integer>> clusterResult = runClustering();
         clusters = runClustering();
 
         // Generate visualizations of clusters and ask for labeling
@@ -65,6 +63,7 @@ public class Train {
         Comparator<Double[]> edgeComparator = Comparator.comparing(c -> c[2]);
         Arrays.sort(edges, edgeComparator);
         
+        // print out smallest edges (sanity check)
         /* 
         for (int i=0; i<20; i++) {
             System.out.printf("[%d %d, wt: %2f]\n", edges[i][0].intValue(), edges[i][1].intValue(), edges[i][2]);
@@ -100,6 +99,7 @@ public class Train {
             clusters.add(new Cluster(cluster_samples));
         }
 
+        // Experiment: start k-means from random samples rather than Kruskal result
         /*
         clusters = new ArrayList<Cluster>();
         for (int i=0; i<CLASSES; i++) {
@@ -108,7 +108,7 @@ public class Train {
             clusters.add(c);
         }*/
 
-        // Run k-means afterwards
+        // Run second-stage k-means afterwards
         for (int it=0; it<100; it++) {
             ArrayList<double[]> centroids = new ArrayList<double[]>();
 
@@ -143,6 +143,7 @@ public class Train {
         return clusters;
     }
 
+    /* Detect training files */
     public static ArrayList<String> listFiles(File folder) {
         ArrayList<String> files = new ArrayList<String>();
         for (File fileEntry : folder.listFiles()) {

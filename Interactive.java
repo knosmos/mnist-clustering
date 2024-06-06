@@ -1,3 +1,11 @@
+/*
+ * Interactive visualizer of cluster centroids
+ * 
+ * Jieruei Chang
+ * Java 11
+ * 4/6/2024
+ */
+
 import java.util.*;
 import java.io.*;
 
@@ -76,7 +84,6 @@ public class Interactive {
         if (StdDraw.isMousePressed()) {
             int c = (int)StdDraw.mouseX();
             int r = (int)StdDraw.mouseY();
-            System.out.println(c + " " + r);
             if (0 <= r && r < 28 && 0 <= c && c < 28) {
                 // paint grid
                 for (int i=0; i<28; i++) {

@@ -1,5 +1,9 @@
 /*
  * Class to load and represent one MNIST sample
+ * 
+ * Jieruei Chang
+ * Java 11
+ * 4/6/2024
  */
 
 import java.util.*;
@@ -10,13 +14,17 @@ import java.io.*;
 public class Sample {
     private double[] data;
     private String filename;
+
     public Sample(String filename) throws IOException {
         load(filename);
         this.filename = filename;
     }
+
     public Sample(double[] data) {
         this.data = data;
     }
+
+    /* Distance to other sample */
     public double distance(Sample other) {
         // squared euclidean distance
         double dist = 0;
@@ -25,6 +33,7 @@ public class Sample {
             dist += (data[i] - other_data[i]) * (data[i] - other_data[i]);
         }
         return dist;
+
         // cosine distance
         /*
         double[] other_data = other.getData();
@@ -39,6 +48,8 @@ public class Sample {
         return 1 - dot / (Math.sqrt(sz1) * Math.sqrt(sz2));
         */
     }
+
+    /* Overloaded distance method */
     public double distance(double[] other_data) {
         double dist = 0;
         for (int i=0; i<data.length; i++) {
@@ -46,9 +57,8 @@ public class Sample {
         }
         return dist;
     }
-    public double[] getData() {
-        return this.data;
-    }
+
+    /* Load data from image file */
     private void load(String filename) throws IOException {
         // read image
         BufferedImage p = ImageIO.read(new File(filename));
@@ -61,5 +71,9 @@ public class Sample {
                 data[i*p.getWidth() + j] = gray/255.0;
             }
         }
+    }
+
+    public double[] getData() {
+        return this.data;
     }
 }
